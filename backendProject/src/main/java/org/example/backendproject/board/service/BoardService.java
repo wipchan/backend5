@@ -77,7 +77,7 @@ public class BoardService {
 
     /** 게시글 삭제 **/
     @Transactional
-    public void deleteBoard(Long boardId) {
+    public void deleteBoard(Long boardId, Long id) {
         if (!boardRepository.existsById(boardId))
             throw new IllegalArgumentException("게시글 없음: " + boardId);
         boardRepository.deleteById(boardId);

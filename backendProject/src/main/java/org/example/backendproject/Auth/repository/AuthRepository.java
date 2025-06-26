@@ -16,4 +16,6 @@ public interface AuthRepository extends JpaRepository<Auth, Long> {
 
     // refresh 토큰이 있는지 확인하는 쿼리 메서드
     Optional<Auth> findByRefreshToken(String refreshToken);
+
+    Optional<Auth> findByUser(User user);
 }

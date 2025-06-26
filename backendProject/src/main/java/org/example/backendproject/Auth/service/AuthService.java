@@ -7,18 +7,15 @@ import org.example.backendproject.Auth.dto.LoginResponseDTO;
 import org.example.backendproject.Auth.dto.SignUpRequestDTO;
 import org.example.backendproject.Auth.entity.Auth;
 import org.example.backendproject.Auth.repository.AuthRepository;
-import org.example.backendproject.security.core.CustomerUserDetails;
+import org.example.backendproject.security.core.CustomUserDetails;
 import org.example.backendproject.security.core.Role;
 import org.example.backendproject.security.jwt.JwtTokenProvider;
-import org.example.backendproject.user.dto.UserDTO;
-import org.example.backendproject.user.dto.UserProfileDTO;
 import org.example.backendproject.user.entity.User;
 import org.example.backendproject.user.entity.UserProfile;
 import org.example.backendproject.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -76,11 +73,11 @@ public class AuthService {
 
         // 위 비밀번호가 일치하면 기존 토큰 정보를 비교하고 토큰이 있으면 업데이트 ,없으면 새로 발급
         String accessToken = jwtTokenProvider.generateToken(
-            new UsernamePasswordAuthenticationToken(new CustomerUserDetails(user)
+            new UsernamePasswordAuthenticationToken(new CustomUserDetails(user)
             ,user.getPassword()), jwtAccessTokenExpirationTime);
 
         String refreshToken = jwtTokenProvider.generateToken(
-            new UsernamePasswordAuthenticationToken(new CustomerUserDetails(user)
+            new UsernamePasswordAuthenticationToken(new CustomUserDetails(user)
             ,user.getPassword()), jwtRefreshTokenExpirationTime);
 
         // 현재 로그인한 사람이 DB에 있는지 확인하고 있으면 토큰을 DB에 저장하고 로그인 처리
@@ -108,7 +105,7 @@ public class AuthService {
             // 있으면 인증객체를 만들어서 새로운 토큰 발급
             String newAccessToken = jwtTokenProvider.generateToken(
                     new UsernamePasswordAuthenticationToken(
-                            new CustomerUserDetails(auth.getUser()), auth.getUser().getPassword()), jwtAccessTokenExpirationTime); // 엑세스 토큰 만료시간으로 설정
+                            new CustomUserDetails(auth.getUser()), auth.getUser().getPassword()), jwtAccessTokenExpirationTime); // 엑세스 토큰 만료시간으로 설정
 
             auth.updateAccessToken(newAccessToken); // 토큰 업데이트
             authRepository.save(auth); // DB 에 반영

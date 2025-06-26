@@ -81,7 +81,6 @@
             address: document.getElementById('address').value
         };
 
-        // fetchWithAuth('/api/auth/signUp', {
         fetch('/api/auth/signUp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

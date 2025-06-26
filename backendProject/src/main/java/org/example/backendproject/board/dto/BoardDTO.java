@@ -23,7 +23,8 @@ public class BoardDTO {
 
     private String batchkey;
 
-    public BoardDTO(Long id, String title, String content, String username, Long user_id, LocalDateTime created_date, LocalDateTime updated_date) {
+    public BoardDTO(Long id, String title, String content, String username, Long user_id,
+                    LocalDateTime created_date, LocalDateTime updated_date) {
         this.id = id;
         this.title = title;
         this.content = content;

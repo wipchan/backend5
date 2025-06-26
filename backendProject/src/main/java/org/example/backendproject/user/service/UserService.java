@@ -32,6 +32,7 @@ public class UserService {
         profileDTO.setEmail(profile.getEmail());
         profileDTO.setPhone(profile.getPhone());
         profileDTO.setAddress(profile.getAddress());
+
         dto.setProfile(profileDTO);
 
         return dto;
@@ -43,7 +44,7 @@ public class UserService {
         User user = userRepository.findById(id) // 유저 레포지토리를 통해서 유저를 가져옴
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        UserProfile profile = user.getUserProfile();
+        UserProfile profile = user.getUserProfile(); // 프로필 객체를 만들어서 기존에 변경되기 전 프로필을 넣어줍니다.
 
         if (profile != null && userDTO.getProfile() != null){
             UserProfileDTO dtoProfile = userDTO.getProfile();
